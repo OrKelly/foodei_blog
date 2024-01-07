@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+ 
+{% block content %}
+    <div class="delete-form" style="text-align: center; margin: 30px">
+    <h1>Удаление поста</h1>
+    <form action="" method="post">{% csrf_token %}
+      <p>Вы уверены что хотите удалить "{{ post.title }}"? Вернуть его не получиться!</p>
+      <button type="submit" class="site-btn">Подтвердить</button>
+    </form>
+    </div>
+{% endblock content %}

@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+      <div class="signin__form__text">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {{ form.media }}
+             <div class="form-error">{{ form.errors }}</div>
+            <button type="submit" class="site-btn">Опубликовать</button>
+        </form>
+    </div>
+
+{% endblock content %}

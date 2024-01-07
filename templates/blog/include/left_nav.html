@@ -1,0 +1,24 @@
+{% load menu_tags cache %}
+<!-- Humberger Begin -->
+    <div class="humberger__menu__overlay"></div>
+    <div class="humberger__menu__wrapper">
+        <div class="humberger__menu__logo">
+            <a href="/cook/static"><img src="img/humberger/humberger-logo.png" alt=""></a>
+        </div>
+        <nav class="humberger__menu__nav mobile-menu">
+            <ul>
+                <li><a href="{% url 'home' %}">Главная страница</a></li>
+                {% get_categories %}
+            </ul>
+        </nav>
+        <div id="mobile-menu-wrap"></div>
+        <div class="humberger__menu__about">
+            <div class="humberger__menu__title sidebar__item__title">
+                <h6>О сайте</h6>
+                <p>Привет! Это сайт для поваров-профессионалов, поваров-любителей и тем, кто любит
+          вкусно покушать! У нас вы найдете самые лучшие и вкусные рецепты! А может, вы захотите ими
+          поделиться? Не стесняйтесь!</p>
+            </div>
+        </div>
+    </div>
+    <!-- Humberger End -->

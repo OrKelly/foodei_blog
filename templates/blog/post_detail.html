@@ -1,0 +1,120 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <!-- Single Post Section Begin -->
+    <section class="single-post spad">
+        <div class="single-post__hero set-bg" data-setbg="{{ post.image.url }}"></div>
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-8">
+                    <div class="single-post__title">
+                        <div class="single-post__title__meta">
+                            <h2>{{ post.create_at|date:'d' }}</h2>
+                            <span>{{ post.create_at|date:'M' }}</span>
+                        </div>
+                        <div class="single-post__title__text">
+                            <ul class="label">
+                                             {% if post.author == request.user or request.user.is_staff %}
+                                <div class="red_post" style="float: right; font-size: 30px; margin-right: 5px">
+                            <a href="{% url 'update_post' post_slug=post.slug %}">&#9998;</a>
+                                <a href="{% url 'delete_post' post_slug=post.slug %}">&#128465;</a>
+                                </div>
+                            {% endif %}
+                                <li>{{ post.category }}</li>
+                            </ul>
+                            <h4>{{ post.title }}</h4>
+                            <ul class="widget">
+                                <li>от {{ post.author.first_name }} {{ post.author.last_name }}</li>
+                                <li>{{ post.time_to_read }} минут на чтение</li>
+                                <li>{{ post.get_comments.count }} Комментариев</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="single-post__top__text">
+                        <p>{{ post.text|slice:":200"|safe }}...</p>
+                    </div>
+                    <div class="single-post__recipe__details">
+                        <div class="single-post__recipe__details__option">
+                            <ul>
+                                <li>
+                                    <h5><i class="fa fa-clock-o"></i> PREP TIME</h5>
+                                    <span>{{ post.prep_time }}</span>
+                                </li>
+                                <li>
+                                    <h5><i class="fa fa-clock-o"></i> Cook TIME</h5>
+                                    <span>{{ post.cook_time }}</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="single-post__recipe__details__indegradients">
+                            <h5>Ingredients</h5>
+                        {{ post.ingredients|safe}}
+                        </div>
+                        <div class="single-post__recipe__details__direction">
+                            <h5>Directions</h5>
+                        {{ post.directions|safe }}
+                        </div>
+                    </div>
+
+                    <div class="single-post__desc">
+                        <p>...{{ post.text|slice:"200:"|safe }}</p>
+                    </div>
+                    <div class="single-post__tags">
+                        {% for tag in post.tag.all %}
+                        <a href="{% url 'tag_list' slug=tag.slug %}">{{ tag.name }}</a>
+                        {% endfor %}
+                    </div>
+                    <div class="single-post__author__profile">
+                        <div class="single-post__author__profile__pic">
+                            <img src="{{ post.author.photo.url }}" alt="">
+                        </div>
+                        <div class="single-post__author__profile__text">
+                            <h4><a href="{% url 'profile' post.author.pk %}"> {{ post.author.first_name }}</a></h4>
+                            <p>{{ post.author.description }}</p>
+                        </div>
+                    </div>
+                    <div class="single-post__comment">
+                        <div class="widget__title">
+                            <h4>{{ post.get_comments.count }} Комментариев</h4>
+                        </div>
+                        <div class="single-post__comment__item">
+                            {% for comment in post.get_comments %}
+                            <div class="single-post__comment__item__pic">
+                                <img src="{{ comment.author.photo.url }}" alt="">
+                            </div>
+                            <div class="single-post__comment__item__text">
+                                <h5>{{ comment.author.first_name }} {{ comment.author.last_name }}</h5>
+                                {% if comment.author == request.user or request.user.is_staff %}
+                                     <div class="red_post" style="float: right; font-size: 20px; margin-right: 5px">
+                                 <a href="{% url 'update_comment' comment.pk %}">&#9998;</a>
+                                <a href="{% url 'delete_comment' comment.pk %}">&#128465;
+                                </div>
+                            {% endif %}
+                                <span>{{ comment.create_at }}</span>
+                                <p>{{ comment.message }}</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="single-post__leave__comment">
+                        <div class="widget__title">
+                        </div>
+                        {% if request.user.is_authenticated %}
+                        <form action="{% url 'create_comment' pk=post.id %}" method="post">
+                            {% csrf_token %}
+                            {{ form.message }}
+                            <button type="submit" class="site-btn">Submit</button>
+                        </form>
+                        {% else %}
+                            <p>Для комментария необходимо <a href="{% url 'login' %}">авторизоваться</a></p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Single Post Section End -->
+
+{% endblock content %}

@@ -1,0 +1,24 @@
+{% load cache %}
+
+<div class="col-lg-4 col-md-4">
+  <div class="sidebar__item">
+    <div class="sidebar__about__item">
+      <div class="sidebar__item__title">
+        <h6>О сайте</h6>
+          <p>Привет! Это сайт для поваров-профессионалов, поваров-любителей и тем, кто любит
+          вкусно покушать! У нас вы найдете самые лучшие и вкусные рецепты! А может, вы захотите ими
+          поделиться? Не стесняйтесь!</p>
+      </div>
+    </div>
+    <div class="sidebar__item__banner">
+      <img src="/static/img/sidebar/banner.jpg" alt="">
+    </div>
+    <div class="sidebar__item__categories">
+      <div class="sidebar__item__title">
+        <h6>Категории</h6>
+      </div>
+    {% include 'blog/include/tags/sidebar_category.html' %}
+
+    </div>
+  </div>
+</div>

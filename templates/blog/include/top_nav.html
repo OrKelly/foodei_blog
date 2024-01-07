@@ -1,0 +1,18 @@
+{% load menu_tags %}
+
+<nav class="header__menu">
+                            <ul>
+                                <li><a href="{% url 'home' %}">Главная</a></li>
+                                {% get_last_posts %}
+                              {% get_categories %}
+                                {% if request.user.is_authenticated %}
+                                <li><a href="{% url 'create_post' %}">Создать пост</a></li>
+                                <li><a href="{% url 'profile' user_pk=request.user.id %}">Профиль</a></li>
+                                <li><a href="{% url 'update_profile' user_pk=request.user.id %}">Отредактировать профиль</a></li>
+                                <li><a href="{% url 'logout' %}">Выйти</a></li>
+                                {% else %}
+                                     <li><a href="{% url 'reg' %}">Регистрация</a></li>
+                                    <li><a href="{% url 'login' %}">Авторизация</a></li>
+                                {% endif %}
+                            </ul>
+                        </nav>
